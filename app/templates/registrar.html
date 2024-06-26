@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Registrar Client</h1>
+<form method="post">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.nome.label }} {{ form.nome() }}
+    </div>
+    <div>
+        {{ form.seguradora.label }} {{ form.seguradora() }}
+    </div>
+    <div>
+        {{ form.tipo_seguro.label }} {{ form.tipo_seguro() }}
+    </div>
+    <div>
+        {{ form.qtde_parcelas.label }} {{ form.qtde_parcelas() }}
+    </div>
+    <div>
+        {{ form.forma_pagamento.label }} {{ form.forma_pagamento() }}
+    </div>
+    <div id="due_dates_container"></div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+<script>
+    document.getElementById('qtde_parcelas').addEventListener('change', function() {
+        const container = document.getElementById('due_dates_container');
+        container.innerHTML = '';
+        const count = parseInt(this.value, 10);
+        for (let i = 1; i <= count; i++) {
+            const label = document.createElement('label');
+            label.innerText = `Due Date ${i}:`;
+            const input = document.createElement('input');
+            input.type = 'date';
+            input.name = `due_date_${i}`;
+            input.required = true;
+            container.appendChild(label);
+            container.appendChild(input);
+            container.appendChild(document.createElement('br'));
+        }
+    });
+</script>
+{% endblock %}
