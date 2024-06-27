@@ -42,15 +42,18 @@ def registrar():
         return redirect(url_for('main.home'))
     return render_template('registrar.html', form=form)
 
+
 @main_bp.route('/toggle_payment/<int:due_date_id>', methods=['POST'])
 def toggle_payment(due_date_id):
     due_date = DueDate.query.get(due_date_id)
     due_date.pago = not due_date.pago
     db.session.commit()
-    return redirect(url_for('main.home'))
+    return redirect(url_for('main.parcelas_de_hoje'))
+
 
 @main_bp.route('/parcelas_de_hoje')
 def parcelas_de_hoje():
     today = datetime.today().strftime('%Y-%m-%d')
     due_dates = DueDate.query.filter_by(date=today).all()
-    return render_template('parcelas_de_hoje.html', due_dates=due_dates)
+    form = ClientForm()  # Ou o formulário correto que você deseja usar
+    return render_template('parcelas_de_hoje.html', due_dates=due_dates, form=form)

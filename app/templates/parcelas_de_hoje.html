@@ -1,20 +1,28 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parcelas de Hoje</title>
+</head>
+<body>
+    <h1>Parcelas de Hoje</h1>
+    <ul>
+        {% for due_date in due_dates %}
+        <li>
+            {{ due_date.client.nome }} - {{ format_date(due_date.date) }}
+            <form action="{{ url_for('main.toggle_payment', due_date_id=due_date.id) }}" method="post">
+                {{ form.hidden_tag() }}
+                <button type="submit">
+                    {% if due_date.pago %}
+                    Pagamento Confirmado
+                    {% else %}
+                    Confirmar Pagamento
+                    {% endif %}
+                </button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
 
-{% block content %}
-<h1>Parcelas de Hoje</h1>
-<ul>
-    {% for due_date in due_dates %}
-    <li>
-        Cliente: {{ due_date.client.nome }} - Seguradora: {{ due_date.client.seguradora }} - Tipo de Seguro: {{ due_date.client.tipo_seguro }}<br>
-        Data de Vencimento: {{ format_date(due_date.date) }}<br>
-        <form action="{{ url_for('main.toggle_payment', due_date_id=due_date.id) }}" method="post" style="display:inline;">
-            {% if due_date.pago %}
-            <button type="submit" style="background-color: green; color: white;">Pago</button>
-            {% else %}
-            <button type="submit" style="background-color: red; color: white;">Pendente</button>
-            {% endif %}
-        </form>
-    </li>
-    {% endfor %}
-</ul>
-{% endblock %}

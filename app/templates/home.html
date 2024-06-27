@@ -3,14 +3,14 @@
 {% block content %}
 <h1>Client List</h1>
 <ul>
-    {% for client in clients %}
+    {% for client_index, client in enumerate(clients) %}
     <li>
         <strong>{{ client.nome }}</strong> - {{ client.seguradora }} - {{ client.tipo_seguro }}
         <ul>
-            {% for due_date in client.due_dates %}
+            {% for due_date_index, due_date in enumerate(client.due_dates) %}
             <li>
                 {{ format_date(due_date.date) }}
-                <form action="{{ url_for('toggle_payment', due_date_id=due_date.id) }}" method="post" style="display:inline;">
+                <form action="{{ url_for('main.toggle_payment', due_date_id=due_date.id) }}" method="post" style="display:inline;">
                     {% if due_date.pago %}
                     <button type="submit" style="background-color: green; color: white;">Pago</button>
                     {% else %}

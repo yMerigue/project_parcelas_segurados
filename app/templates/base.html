@@ -9,9 +9,9 @@
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('registrar') }}">Registrar</a></li>
-            <li><a href="{{ url_for('parcelas_de_hoje') }}">Parcelas de Hoje</a></li>
+            <li><a href="{{ url_for('main.home') }}">Home</a></li>
+            <li><a href="{{ url_for('main.registrar') }}">Registrar</a></li>
+            <li><a href="{{ url_for('main.parcelas_de_hoje') }}">Parcelas de Hoje</a></li>
         </ul>
     </nav>
     <div class="container">
@@ -20,3 +20,4 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
+
